@@ -5,7 +5,7 @@ using MyStopwatch;
 namespace StopwatchTest
 {
     [TestClass]
-    public class LapsTest
+    public class CommandsTest
     {
         [TestMethod]
         public void InitializationTest()
