@@ -5,13 +5,24 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MyStopwatch"
         mc:Ignorable="d"
-        Title="Stopwatch" Height="450" Width="800">
+        Title="Stopwatch" Height="450" Width="800" ResizeMode="NoResize">
     <Grid>
-        <ListBox x:Name="LapsList" HorizontalAlignment="Left" Height="359" Margin="404,24,0,0" VerticalAlignment="Top" Width="352"/>
-        <Label x:Name="Stopwatch" Content="00:00:00.000" Margin="52,70,0,0" VerticalAlignment="Top" Height="87" Width="298" FontSize="48" HorizontalAlignment="Left"/>
-        <Button x:Name="StartButton" Content="Start" HorizontalAlignment="Left" Margin="52,189,0,0" VerticalAlignment="Top" Width="298" Height="71" FontSize="18" Click="StartButton_Click"/>
-        <Button x:Name="LapButton" Content="Lap" HorizontalAlignment="Left" Margin="216,281,0,0" VerticalAlignment="Top" Width="134" Height="66" FontSize="18" Click="LapButton_Click"/>
-        <Button x:Name="ResetButton" Content="Reset" HorizontalAlignment="Left" Margin="52,281,0,0" VerticalAlignment="Top" Width="142" RenderTransformOrigin="0.12,0.535" Height="66" FontSize="18" IsEnabled="False" Click="ResetButton_Click"/>
+        <ListBox x:Name="LapsList" ItemsSource="{Binding Laps}"
+                 HorizontalAlignment="Left" Height="359" Margin="404,24,0,0" VerticalAlignment="Top" Width="352">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Path=LapEntry}" />
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Button x:Name="StartButton" Content="{Binding StartPauseButtonText}" Command="{Binding StartCommand}"
+                HorizontalAlignment="Left" Margin="52,189,0,0" VerticalAlignment="Top" Width="298" Height="71" FontSize="18"/>
+        <Button x:Name="LapButton" Content="Lap" Command="{Binding AddLap}" CommandParameter="{Binding CurrentTime}"
+                HorizontalAlignment="Left" Margin="212,281,0,0" VerticalAlignment="Top" Width="138" Height="66" FontSize="18"/>
+        <Button x:Name="ResetButton" Content="Reset" Command="{Binding ResetCommand}"
+                HorizontalAlignment="Left" Margin="52,281,0,0" VerticalAlignment="Top" Width="138" RenderTransformOrigin="0.12,0.535" Height="66" FontSize="18"/>
+        <TextBlock x:Name="MyStopwatch" Text="{Binding CurrentTime, UpdateSourceTrigger=PropertyChanged}"
+                   HorizontalAlignment="Left" Margin="52,58,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="105" Width="298" TextAlignment="Center" FontSize="48"/>
 
     </Grid>
 </Window>
