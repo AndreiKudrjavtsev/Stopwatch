@@ -11,19 +11,10 @@ namespace MyStopwatch
     /// <summary>
     /// A lap entry used as a model in this stopwatch implementation
     /// </summary>
-    public class Lap : INotifyPropertyChanged
+    public class Lap
     {
         // Maybe its good to re-do class with fields and add like time & lap number;
-        private string entry;
-        public string LapEntry
-        {
-            get => entry;
-            set
-            {
-                entry = value;
-                OnPropertyChanged();
-            }
-        }
+        public string LapEntry { get; set; }
 
         // this constructor might be useful with refactoring
         public Lap(TimeSpan elapsed, int lapNum)
@@ -37,12 +28,6 @@ namespace MyStopwatch
         public Lap(string elapsed, int lapNum)
         {
             LapEntry = $"{lapNum}. {elapsed}";
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        public void OnPropertyChanged([CallerMemberName]string prop = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
         }
     }
 }
