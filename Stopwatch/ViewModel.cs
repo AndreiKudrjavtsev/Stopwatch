@@ -15,8 +15,29 @@ namespace MyStopwatch
     {
         private DispatcherTimer dispatcherTimer = new DispatcherTimer();
         private Stopwatch stopWatch = new Stopwatch();
-        public string CurrentTime { get; set; }
-        public string StartPauseButtonText { get; set; }
+
+        private string currentTime;
+        public string CurrentTime
+        {
+            get => currentTime;
+            set
+            {
+                currentTime = value;
+                OnPropertyChanged();
+                AddLap.RaiseCanExecuteChanged();
+            }
+        }
+
+        private string startPauseButtonText;
+        public string StartPauseButtonText
+        {
+            get => startPauseButtonText;
+            set
+            {
+                startPauseButtonText = value;
+                OnPropertyChanged();
+            }
+        }
 
         public ObservableCollection<Lap> Laps { get; set; }
 
@@ -37,8 +58,6 @@ namespace MyStopwatch
                 var elapsed = String.Format("{0:00}:{1:00}:{2:00}.{3:000}",
                     ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds);
                 CurrentTime = elapsed;
-
-                OnPropertyChanged("CurrentTime");
             }
             
         }
@@ -86,14 +105,12 @@ namespace MyStopwatch
                             stopWatch.Start();
                             dispatcherTimer.Start();
                             StartPauseButtonText = "Pause";
-                            OnPropertyChanged("StartPauseButtonText");
                         }
                         else
                         {
                             stopWatch.Stop();
                             dispatcherTimer.Stop();
                             StartPauseButtonText = "Resume";
-                            OnPropertyChanged("StartPauseButtonText");
                         }
                     },
                     (obj) => true
@@ -114,9 +131,7 @@ namespace MyStopwatch
                     {
                         stopWatch.Reset();
                         CurrentTime = "00:00:00.000";
-                        OnPropertyChanged("CurrentTime");
                         StartPauseButtonText = "Start";
-                        OnPropertyChanged("StartPauseButtonText");
                         Laps.Clear();
                     },
                     (obj) => CurrentTime != "00:00:00.000"
